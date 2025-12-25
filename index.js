@@ -2,7 +2,11 @@
 // KeepAlive（Render 用）
 //=========================
 import express from "express";
+import cors from "cors";   // ← 追加
+
 const app = express();
+
+app.use(cors());  // ← 追加（全ての外部アクセスを許可）
 
 app.get("/", (req, res) => {
   res.send("Bot is alive");
@@ -347,4 +351,5 @@ config.bots.forEach(async (botConfig) => {
   });
 
 });
+
 
