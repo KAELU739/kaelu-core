@@ -1,0 +1,40 @@
+{
+  "bots": [
+    {
+      "name": "Bot1",
+      "tokenEnv": "BOT1_TOKEN",
+      "clientId": "1448476765579378788",
+      "intents": ["Guilds"],
+      "commandsDir": "./commands/bot1"
+    },
+    {
+      "name": "Bot2",
+      "tokenEnv": "BOT2_TOKEN",
+      "clientId": "1452676583528730837",
+      "intents": ["Guilds", "GuildMessages", "MessageContent"],
+      "commandsDir": "./commands/bot2",
+
+      "threadWatch": {
+        "watchChannelId": "1453285675209195612",
+        "alertChannelId": "1453290489997426759"
+      },
+
+      "activeVoice": {
+        "channelId": "1453287332596940982"
+      },
+
+      "keepLatestMessage": {
+        "channelId": "1453285423932772414",
+        "content": "**自己紹介テンプレート**\n> 名前：\n> MCID：\n> 一言\n-# ※このメッセージは常に最新になるように設定されています。"
+      },
+
+      "wordDetect": {
+        "alertChannelId": "1453290489997426759"
+      },
+
+      "messageLog": {
+        "alertChannelId": "1453290489997426759"
+      }
+    }
+  ]
+}
