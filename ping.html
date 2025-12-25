@@ -2,8 +2,9 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>Bot ダッシュボード</title>
+  <title>KAELU Bot ダッシュボード</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
       margin: 0;
@@ -14,15 +15,36 @@
       flex-direction: column;
       align-items: center;
       padding: 20px;
+
+      /* 背景フェード */
+      animation: bgfade 20s infinite alternate;
     }
+
+    @keyframes bgfade {
+      0% { background-color: #121212; }
+      50% { background-color: #101010; }
+      100% { background-color: #121212; }
+    }
+
     h1 {
       font-size: 1.8em;
       margin-bottom: 10px;
     }
+
     .status {
       font-size: 1.2em;
       margin-bottom: 20px;
+
+      /* ステータス文字を揺らす */
+      animation: float 3s infinite ease-in-out;
     }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(1px); }
+      100% { transform: translateY(0); }
+    }
+
     .bot-list {
       display: flex;
       flex-direction: column;
@@ -30,21 +52,49 @@
       width: 100%;
       max-width: 400px;
     }
+
     .bot {
       background: #1e1e1e;
       border: 1px solid #00ff88;
       border-radius: 8px;
       padding: 10px;
     }
+
     .bot-name {
       font-weight: bold;
       font-size: 1.1em;
     }
+
     .log {
       font-size: 0.9em;
       margin-top: 5px;
       color: #ccc;
     }
+
+    /* スクリーンセーバー */
+    #screensaver {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      z-index: 999;
+    }
+
+    /* 全画面ボタン */
+    #fullscreenBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px 15px;
+      background: #00ff88;
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
     @media (max-width: 600px) {
       h1 { font-size: 1.5em; }
       .status { font-size: 1em; }
@@ -52,6 +102,7 @@
     }
   </style>
 </head>
+
 <body>
   <h1>🔄 Bot ダッシュボード</h1>
   <div class="status" id="status">Ping 待機中...</div>
@@ -67,12 +118,19 @@
     </div>
   </div>
 
+  <!-- スクリーンセーバー -->
+  <div id="screensaver"></div>
+
+  <!-- 全画面ボタン -->
+  <button id="fullscreenBtn">⛶ 全画面</button>
+
   <script>
     const url = "https://kaelu-discordbots.onrender.com/";
     const status = document.getElementById("status");
     const log1 = document.getElementById("log1");
     const log2 = document.getElementById("log2");
 
+    // --- Ping 処理 ---
     function ping() {
       fetch(url)
         .then(() => {
@@ -91,6 +149,44 @@
 
     ping();
     setInterval(ping, 30000);
+
+    // --- Ping ログをランダムに 1px 動かす ---
+    function jitter(el) {
+      const x = Math.random() * 2 - 1;
+      const y = Math.random() * 2 - 1;
+      el.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    setInterval(() => {
+      jitter(status);
+      jitter(log1);
+      jitter(log2);
+    }, 5000);
+
+    // --- スクリーンセーバー（5分で発動） ---
+    let timer;
+    function resetTimer() {
+      clearTimeout(timer);
+      document.getElementById("screensaver").style.display = "none";
+      timer = setTimeout(() => {
+        document.getElementById("screensaver").style.display = "block";
+      }, 5 * 60 * 1000);
+    }
+
+    document.addEventListener("mousemove", resetTimer);
+    document.addEventListener("keydown", resetTimer);
+    document.addEventListener("touchstart", resetTimer);
+    resetTimer();
+
+    // --- 全画面ボタン ---
+    document.getElementById("fullscreenBtn").addEventListener("click", () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    });
   </script>
 </body>
 </html>
+
