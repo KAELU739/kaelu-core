@@ -2,11 +2,19 @@
 // KeepAlive（Render 用）
 //=========================
 import express from "express";
-import cors from "cors";   // ← 追加
+import cors from "cors";
 
 const app = express();
 
-app.use(cors());  // ← 追加（全ての外部アクセスを許可）
+// CORS を最優先で有効化
+app.use(cors());
+
+// すべてのレスポンスに CORS ヘッダーを付与（保険）
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
+  next();
+});
 
 app.get("/", (req, res) => {
   res.send("Bot is alive");
@@ -351,5 +359,6 @@ config.bots.forEach(async (botConfig) => {
   });
 
 });
+
 
 
