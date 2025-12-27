@@ -1,0 +1,115 @@
+# ============================================
+#  Geyser - JE/BE クロスプレイ用 完全版設定
+#  最適化: Paper / Spigot サーバー向け
+#  認証: Floodgate（BE プレイヤーを JE にログイン）
+# ============================================
+
+bedrock:
+  # BE プレイヤーが接続するポート（UDP）
+  port: 19132
+  # サーバーの公開 IP（通常は 0.0.0.0）
+  address: 0.0.0.0
+  motd1: "Minecraft Server"
+  motd2: "GeyserMC"
+
+remote:
+  # JE サーバーのアドレス（同一マシンなら 127.0.0.1）
+  address: 127.0.0.1
+  # JE サーバーのポート
+  port: 25565
+  # Floodgate を使う場合は必ず floodgate
+  auth-type: floodgate
+  # パスワードは BungeeCord/Velocity 用。単体運用なら空でOK
+  password: ""
+
+floodgate-key-file: "public-key.pem"
+
+# BE プレイヤーの UUID を JE 側と衝突しないようにする
+user-auths: {}
+
+# BE 側の ping 応答設定
+ping-passthrough: "DISABLED"
+
+# BE 側のチャット設定
+command-suggestions: true
+
+# パフォーマンス最適化
+cache-chunks: true
+cache-images: true
+
+# BE 側のワールド座標の扱い
+above-bedrock-nether-building: false
+
+# プレイヤーの移動補正（ラグ対策）
+force-resource-packs: true
+
+# ログ設定
+debug-mode: false
+
+# BE 側のスキン処理
+allow-custom-skulls: true
+
+# プレイヤーの接続制限
+max-players: 100
+
+# BE 側のワールド設定
+show-cooldown: true
+
+# BE 側のフォーム UI の最適化
+disable-bedrock-scaffolding: false
+
+# BE 側のエンティティ処理
+emote-offhand-workaround: true
+
+# BE 側のアイテム処理
+disable-custom-model-data: false
+
+# BE 側のブロック破壊速度補正
+break-speed:
+  creative: 0
+  survival: 0
+
+# BE 側のワールド境界
+world-border:
+  enabled: true
+
+# BE 側の ping 表示
+passthrough-motd: false
+passthrough-player-counts: false
+
+# BE 側の接続ログ
+log-player-ip-addresses: true
+
+# BE 側の言語設定
+default-locale: "ja_jp"
+
+# BE 側のサーバーアイコン
+server-icon: "server-icon.png"
+
+# BE 側の接続時のメッセージ
+advancements:
+  enabled: true
+
+# BE 側のスコアボード
+scoreboard:
+  enable: true
+  update-rate: 20
+
+# BE 側のチャットフィルター
+chat:
+  enable: true
+  prefix: "§7[§bBE§7]§r "
+
+# BE 側のプレイヤー名の prefix
+player-prefix: "§b[BE]§r "
+
+# BE 側の接続時の自動メッセージ
+welcome-message: "§aようこそ！Bedrock Edition プレイヤー！"
+
+# BE 側のアイテム変換
+item-palette:
+  enabled: true
+
+# BE 側のワールド同期
+world:
+  allow-portal-teleportation: true
